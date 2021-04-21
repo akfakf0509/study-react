@@ -1,15 +1,28 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class TOC extends Component {
-    render() {
-      return (
-        <ul>
-          <li><a href="1.html">HTML</a></li>
-          <li><a href="2.html">CSS</a></li>
-          <li><a href="3.html">JavaScript</a></li>
-        </ul>
+  render() {
+    var lists = [];
+    var data = this.props.data;
+    var i = 0;
+    while (i < data.length) {
+      lists.push(
+        <li key={data[i].id}>
+          <a
+            href={"/contents/" + data[i].id}
+            onClick={function (e) {
+              e.preventDefault();
+              this.props.onChangePage();
+            }.bind(this)}
+          >
+            {data[i].title}
+          </a>
+        </li>
       );
+      i = i + 1;
     }
-}  
+    return <ul>{lists}</ul>;
+  }
+}
 
 export default TOC;
