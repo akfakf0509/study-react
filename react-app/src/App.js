@@ -30,29 +30,36 @@ class App extends Component {
     } else if (this.state.mode === "read") {
       var i = 0;
       while (i < this.state.contents.length) {
+        var data = this.state.contents[i];
+
+        if (data.id === this.state.selected_content_id) {
+          _title = data.title;
+          _desc = data.desc;
+
+          break;
+        }
         i = i + 1;
       }
-      _title = this.state.contents[0].title;
-      _desc = this.state.contents[0].desc;
     }
     return (
       <div className="App">
         <Subject
           title={this.state.subject.title}
           sub={this.state.subject.sub}
-          onChangePage={function () {
+          onChangePage={() => {
             this.setState({
               mode: "welcome",
             });
-          }.bind(this)}
+          }}
         />
         <TOC
           data={this.state.contents}
-          onChangePage={function () {
+          onChangePage={(id) => {
             this.setState({
               mode: "read",
+              selected_content_id: Number(id),
             });
-          }.bind(this)}
+          }}
         />
         <Content title={_title} desc={_desc} />
       </div>
